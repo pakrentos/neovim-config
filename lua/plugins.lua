@@ -8,6 +8,17 @@
 require "helpers/globals"
 
 return {
+  -- dashboard, start page {{{
+  {
+    "glepnir/dashboard-nvim",
+    event = 'VimEnter',
+    config = function()
+      require "extensions.dashboard"
+    end,
+    dependencies = "nvim-tree/nvim-web-devicons"
+  },
+  --}}}
+
   -- Mason {{{
   {
     "williamboman/mason.nvim",
@@ -17,21 +28,37 @@ return {
       "neovim/nvim-lspconfig",
     },
     config = function()
-      require "extensions.mason"
+      -- the config is called inside LSP config to call it in the right order
     end
   },
   -- }}}
 
-  -- Neo Tree {{{
+  -- LSP config {{{
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-    },
+    'neovim/nvim-lspconfig',
+    lazy = false,
+    dependencies = "williamboman/mason.nvim",
+    config = function()
+      require "extensions.lspconfig"
+    end
+  },
+  --}}}
+
+  -- murmur (highlight words) {{{
+  {
+    "nyngwang/murmur.lua",
+    lazy = false,
+    config = function()
+      require "extensions.murmur"
+    end
+  },
+  --}}}
+
+  -- nvim-tree (file browser) {{{
+  {
+    "nvim-tree/nvim-tree.lua",
     config = function ()
-      require "extensions.neotree"
+      require "extensions.tree"
     end
   },
   -- }}}
@@ -58,12 +85,16 @@ return {
     dependencies = {
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
+      'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-emoji',
       'hrsh7th/cmp-nvim-lsp-signature-help',
       'hrsh7th/cmp-nvim-lua',
+      'zbirenbaum/copilot.lua',
+      'zbirenbaum/copilot-cmp',
       'rafamadriz/friendly-snippets',
+      'onsails/lspkind-nvim',
     },
     config = function()
       require "extensions.cmp"
@@ -71,13 +102,56 @@ return {
   },
   -- }}}
 
-  -- LSP Kind {{{
+  -- autopairs {{{
   {
-    'onsails/lspkind-nvim',
-    lazy = true,
+    'windwp/nvim-autopairs',
     config = function()
-      require "extensions.lspkind"
+      require("nvim-autopairs").setup()
     end
+  },
+  -- }}}
+
+  -- edit surroundings {{{
+  {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = true,
+  },
+  -- }}}
+
+  -- comments {{{
+  {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
+    end
+  },
+  -- }}}
+
+  -- find and replace {{{
+  {
+    'brooth/far.vim',
+  },
+  -- }}}
+
+  -- neogit {{{
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",         -- required
+      "nvim-telescope/telescope.nvim", -- optional
+      "sindrets/diffview.nvim",        -- optional
+    },
+    config = true
+  },
+  -- }}}
+
+  -- git conflicts {{{
+  {
+    'akinsho/git-conflict.nvim',
+    version = "*",
+    config = true
   },
   -- }}}
 
@@ -91,14 +165,37 @@ return {
   },
   -- }}}
 
+  -- sorting {{{
+  {
+    'sQVe/sort.nvim',
+    config = true,
+  },
+  -- }}}
+
   -- Trouble {{{
   {
     "folke/trouble.nvim",
-    lazy = true,
-    dependencies = "kyazdani42/nvim-web-devicons",
+    dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
       require "extensions.trouble"
     end,
+  },
+  -- }}}
+
+  -- show due dates {{{
+  {
+    'NFrid/due.nvim',
+    config = true,
+  },
+  -- }}}
+
+  -- toggle terminal {{{
+  {
+    'akinsho/toggleterm.nvim',
+    version = "*",
+    config = function()
+      require "extensions.toggleterm"
+    end
   },
   -- }}}
 
@@ -114,12 +211,97 @@ return {
   },
   -- }}}
 
-  -- Theme: Sonokai {{{
+  -- vimwiki {{{
   {
-    "sainnhe/sonokai",
+    'vimwiki/vimwiki',
+    init = function()
+      require "extensions.vimwiki"
+    end
+  },
+  --}}}
+
+  -- possession (session management) {{{
+  {
+    "jedrzejboczar/possession.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
+    config = function()
+      require "extensions.possession"
+    end
+  },
+  --}}}
+
+  -- lualine {{{
+  {
+    "nvim-lualine/lualine.nvim",
+    lazy = false,
+    dependencies = "nvim-tree/nvim-web-devicons",
+    config = function()
+      require "extensions.lualine"
+    end
+  },
+  -- }}}
+
+  -- bufferline {{{
+    {
+      "akinsho/bufferline.nvim",
+      version = "*",
+      dependencies = "nvim-tree/nvim-web-devicons",
+      config = function()
+        require "extensions.bufferline"
+      end
+    },
+  -- }}}
+
+  -- bufdel {{{
+  {
+    "ojroques/nvim-bufdel",
+  },
+  --}}}
+
+  -- group buffers using tabs {{{
+  {
+    "tiagovla/scope.nvim",
+    lazy = false,
+    config = function()
+      require "extensions.scope"
+    end
+  },
+  -- }}}
+
+  -- devicons {{{
+  {
+    "nvim-tree/nvim-web-devicons",
+    lazy = false,
+    config = function()
+      require "extensions.devicons"
+    end
+  },
+  -- }}}
+
+  -- scroll-bar {{{
+  {
+    "petertriho/nvim-scrollbar",
+    lazy = false,
+    config = function()
+      require "extensions.scrollbar"
+    end
+  },
+  -- }}}
+
+  -- preview colors {{{
+  {
+    "norcalli/nvim-colorizer.lua",
+  },
+  -- }}}
+
+  -- Theme: Catppuccin {{{
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
     lazy = false,
     config = function ()
-      require "extensions.colorscheme.sonokai"
+      require "extensions.colorscheme.catppuccin"
     end
   },
   -- }}}

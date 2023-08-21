@@ -7,17 +7,35 @@ require'nvim-treesitter.configs'.setup {
 
   -- Needed parsers
   ensure_installed = {
-    "lua",
-    "typescript",
-    "javascript",
-    "go",
-    "python",
+      "c",
+      "comment",
+      "cpp",
+      "css",
+      "diff",
+      "dockerfile",
+      "git_rebase",
+      "git_rebase",
+      "gitcommit",
+      "gitignore",
+      "go",
+      "html",
+      "javascript",
+      "json",
+      "julia",
+      "lua",
+      "markdown",
+      "python",
+      "regex",
+      "rust",
+      "supercollider",
+      "toml",
+      "typescript",
+      "yaml",
   },
 
   -- Install all parsers synchronously
   sync_install = false,
 
-  -- Подсветка
   highlight = {
     -- Enabling highlight for all files
     enable = true,
