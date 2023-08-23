@@ -8,7 +8,7 @@ vm('y', 'ygv<Esc>')
 
 -- Telescope {{{
 nm('<Leader><Leader>', '<cmd>Telescope find_files theme=ivy<CR>')
-nm('<Leader>s', '<cmd>Telescope possession list<CR>')
+nm('<Leader>s', '<cmd>Telescope persisted<CR>')
 nm('<Leader>ff', '<cmd>Telescope live_grep theme=ivy<CR>')
 nm('<Leader>l', '<cmd>Telescope current_buffer_fuzzy_find<CR>')
 nm('<leader>gd', '<cmd>Telescope lsp_definitions theme=cursor<CR>')

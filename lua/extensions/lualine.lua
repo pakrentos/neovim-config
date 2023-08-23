@@ -7,6 +7,10 @@
 local function cwd()
     local current_directory = vim.fn.getcwd()
     local directory_name = vim.fn.fnamemodify(current_directory, ":t")
+    if directory_name ~= '' and directory_name ~= nil then
+        directory_name = directory_name .. ' '
+    end
+
     return directory_name
 end
 
@@ -32,7 +36,10 @@ require('lualine').setup({
                 cwd,
                 on_click = function()
                     cmd [[Telescope persisted]]
-                end
+                end,
+                color = {
+                    gui = 'bold',
+                }
             },
             {
                 'filename',
@@ -58,7 +65,7 @@ require('lualine').setup({
     },
     options = {
         globalstatus = true,
-        component_separators = { left = '', right = '' },
+        component_separators = { '', '' },
         section_separators = { '', '' }
     },
 })
