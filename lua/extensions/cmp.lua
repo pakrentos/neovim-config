@@ -40,6 +40,9 @@ cmp.setup{
       mode = 'symbol_text', -- Show only symbol annotations
       maxwidth = 50,   -- Prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
       ellipsis_char = '...',
+      symbol_map = {
+          Copilot = '󰚩',
+      }
     })
   }
 }

@@ -220,12 +220,17 @@ return {
   },
   --}}}
 
-  -- possession (session management) {{{
+  -- persisted.nvim (session management) {{{
   {
-    "jedrzejboczar/possession.nvim",
-    dependencies = "nvim-lua/plenary.nvim",
+    "olimorris/persisted.nvim",
+    dependencies = {
+      {
+        "tiagovla/scope.nvim",
+        lazy = false,
+      }
+    },
     config = function()
-      require "extensions.possession"
+      require "extensions.persisted"
     end
   },
   --}}}
@@ -258,16 +263,6 @@ return {
   },
   --}}}
 
-  -- group buffers using tabs {{{
-  {
-    "tiagovla/scope.nvim",
-    lazy = false,
-    config = function()
-      require "extensions.scope"
-    end
-  },
-  -- }}}
-
   -- devicons {{{
   {
     "nvim-tree/nvim-web-devicons",
@@ -294,6 +289,16 @@ return {
   },
   -- }}}
 
+  -- which key {{{
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    config = function ()
+      require "extensions.which-key"
+    end
+  },
+  --}}}
+
   -- Theme: Catppuccin {{{
   {
     "catppuccin/nvim",
@@ -308,4 +313,4 @@ return {
 
 }
 
--- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0 foldlevel=0
+-- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0

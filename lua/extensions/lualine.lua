@@ -4,21 +4,61 @@
   See: https://github.com/nvim-lualine/lualine.nvim
 ]]
 
-local function session_name()
-    return require('possession.session').session_name or ''
+local function cwd()
+    local current_directory = vim.fn.getcwd()
+    local directory_name = vim.fn.fnamemodify(current_directory, ":t")
+    return directory_name
 end
 
 require('lualine').setup({
     sections = {
-        lualine_a = {session_name},
-        lualine_c = {{
-            'filename',
-            path = 3
-        }}
+        lualine_b = {
+            'branch',
+            {
+                'diff',
+                on_click = function()
+                    cmd [[DiffviewOpen]]
+                end
+            },
+            {
+                'diagnostics',
+                on_click = function()
+                    cmd [[Trouble]]
+                end
+            },
+        },
+        lualine_c = {
+            {
+                cwd,
+                on_click = function()
+                    cmd [[Telescope persisted]]
+                end
+            },
+            {
+                'filename',
+                path = 1,
+                on_click = function()
+                    cmd [[Telescope find_files]]
+                end
+            },
+            "location",
+        },
+        lualine_x = {},
+        lualine_y = {
+            {
+                'filetype',
+                on_click = function()
+                    cmd [[Telescope filetypes]]
+                end,
+            },
+        },
+        lualine_z = {
+            "progress",
+        }
     },
     options = {
         globalstatus = true,
-        component_separators = {'', ''},
-        section_separators = {'', ''}
-    }
+        component_separators = { left = '', right = '' },
+        section_separators = { '', '' }
+    },
 })

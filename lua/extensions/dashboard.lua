@@ -12,7 +12,7 @@ require("dashboard").setup({
         }, {
             desc = '󱔗 Sessions',
             group = 'Number',
-            action = 'Telescope possession list',
+            action = 'Telescope persisted',
             key = 's'
         }, {
             desc = ' Plugins',
@@ -33,7 +33,7 @@ require("dashboard").setup({
         }, {
             desc = ' Settings',
             group = '@property',
-            action = 'SLoad config',
+            action = 'SessionLoadFromFile ~/.local/share/nvim/sessions/%Users%alestsurko%.config%nvim@@main.vim',
             key = ','
         }, {
             desc = ' Quit',

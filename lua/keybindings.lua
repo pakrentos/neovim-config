@@ -29,8 +29,13 @@ nm('gs', '<Cmd>Sort<CR>')
 vm('gs', '<Esc><Cmd>Sort<CR>')
 -- }}}
 
+-- git {{{
+nm("hu", "<cmd>Gitsigns reset_hunk<CR>")
+nm("hp", "<cmd>Gitsigns preview_hunk<CR>")
+-- }}}
+
 -- session {{{
-nm('<leader>sc', '<cmd>SClose<CR><cmd>Dashboard<CR>') -- Close session
+nm('<leader>sc', '<cmd>SessionClose<CR><cmd>Dashboard<CR>') -- Close session
 -- }}}
 
 -- nvim-tree {{{
@@ -141,7 +146,7 @@ if g.neovide then
 
     cmd[[
         " save buffer
-        inoremap <D-s> <C-o>:w<Enter>
+        inoremap <D-s> <C-o>:w<CR>
         " undo/redo
         inoremap <D-z> <C-o>u
         inoremap <D-y> <C-o><C-r>
@@ -222,4 +227,4 @@ api.nvim_create_autocmd('LspAttach', {
 })
 -- }}}
 
--- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0 foldlevel=0
+-- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0
