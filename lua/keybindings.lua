@@ -49,7 +49,7 @@ nm('<C-t>o', '<cmd>BufferLineCloseLeft<CR><cmd>BufferLineCloseRight<CR>')
 -- }}}
 
 -- bufdel {{{
-nm('<C-t>c', '<cmd>BufDel<CR>')
+nm('<leader>q', '<cmd>BufDel<CR>')
 -- }}}
 
 -- terminal {{{
@@ -228,6 +228,7 @@ api.nvim_create_autocmd('LspAttach', {
 -- }}}
 
 -- LazyGit {{{
-nm('<leader>gg', ':LazyGit<CR>')
+nm('<leader>gg', '<cmd>LazyGit<CR>')
 -- }}}
+
 -- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0
