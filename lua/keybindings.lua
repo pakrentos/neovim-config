@@ -227,4 +227,7 @@ api.nvim_create_autocmd('LspAttach', {
 })
 -- }}}
 
+-- LazyGit {{{
+nm('<leader>gg', ':LazyGit<CR>')
+-- }}}
 -- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0

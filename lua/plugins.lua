@@ -313,11 +313,11 @@ return {
 
   -- lazygit {{{
   {
-    'kdheepak/lazygit.nvim',
-    lazy = false,
-    config = function()
-      require "extensions.lazygit"
-    end
+    "kdheepak/lazygit.nvim",
+    -- optional for floating window border decoration
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+    },
   },
   -- }}}
 }
