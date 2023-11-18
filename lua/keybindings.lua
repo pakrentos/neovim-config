@@ -55,7 +55,7 @@ nm('<leader>q', '<cmd>BufDel<CR>')
 -- terminal {{{
 cmd[[
     " exit from terminal mode with Esc
-    tnoremap <Esc> <C-\><C-n>
+    tnoremap <S-Esc> <C-\><C-n>
     " navigate windows with alt+h/j/k/l
     tnoremap <A-h> <C-\><C-n><C-w>h
     tnoremap <A-j> <C-\><C-n><C-w>j
