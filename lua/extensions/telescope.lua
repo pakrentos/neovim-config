@@ -9,11 +9,15 @@ require("telescope").setup({
                 prompt_position = "top",
                 mirror = true
             }
+        },
+        file_ignore_patterns = {
+            "node%_modules/.*",
+            "target/.*",
         }
     },
     pickers = {
         find_files = {
             hidden = true
         }
-    }
+    },
 })

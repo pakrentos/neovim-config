@@ -311,6 +311,15 @@ return {
   },
   -- }}}
 
+  -- lazygit {{{
+  {
+    'kdheepak/lazygit.nvim',
+    lazy = false,
+    config = function()
+      require "extensions.lazygit"
+    end
+  },
+  -- }}}
 }
 
 -- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0
