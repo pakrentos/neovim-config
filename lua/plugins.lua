@@ -37,7 +37,10 @@ return {
   {
     'neovim/nvim-lspconfig',
     lazy = false,
-    dependencies = "williamboman/mason.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "folke/neodev.nvim",
+    },
     config = function()
       require "extensions.lspconfig"
     end
@@ -57,7 +60,7 @@ return {
   -- nvim-tree (file browser) {{{
   {
     "nvim-tree/nvim-tree.lua",
-    config = function ()
+    config = function()
       require "extensions.tree"
     end
   },
@@ -71,6 +74,13 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "ahmedkhalf/project.nvim",
+      'nvim-telescope/telescope-fzf-native.nvim',
+      {
+        "nvim-telescope/telescope-live-grep-args.nvim",
+        -- This will not install any breaking changes.
+        -- For major updates, this must be adjusted manually.
+        version = "^1.0.0",
+      },
     },
     config = function()
       require "extensions.telescope"
@@ -247,14 +257,14 @@ return {
   -- }}}
 
   -- bufferline {{{
-    {
-      "akinsho/bufferline.nvim",
-      version = "*",
-      dependencies = "nvim-tree/nvim-web-devicons",
-      config = function()
-        require "extensions.bufferline"
-      end
-    },
+  {
+    "akinsho/bufferline.nvim",
+    version = "*",
+    dependencies = "nvim-tree/nvim-web-devicons",
+    config = function()
+      require "extensions.bufferline"
+    end
+  },
   -- }}}
 
   -- bufdel {{{
@@ -293,7 +303,7 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    config = function ()
+    config = function()
       require "extensions.which-key"
     end
   },
@@ -305,7 +315,7 @@ return {
     name = "catppuccin",
     priority = 1000,
     lazy = false,
-    config = function ()
+    config = function()
       require "extensions.colorscheme.catppuccin"
     end
   },
@@ -316,10 +326,76 @@ return {
     "kdheepak/lazygit.nvim",
     -- optional for floating window border decoration
     dependencies = {
-        "nvim-lua/plenary.nvim",
+      "nvim-lua/plenary.nvim",
     },
   },
   -- }}}
+
+  -- nvim-dap {{{
+  {
+    -- TODO: add config script in extensions which checks presence of Mason's
+    -- codelldb and cpptools DAP packages
+    "mfussenegger/nvim-dap",
+  },
+  -- }}}
+
+  -- nvim-dap-projects {{{
+  {
+    "ldelossa/nvim-dap-projects",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+    },
+    config = function()
+      require "extensions.nvim-dap-projects"
+    end
+  },
+  -- }}}
+
+  -- nvim-luaref {{{
+  {
+    "milisims/nvim-luaref"
+  },
+  -- }}}
+
+  -- neodev {{
+  {
+    "folke/neodev.nvim",
+    opts = {},
+  },
+  -- }}
+
+  -- nvim-dap-ui {{
+  {
+    "rcarriga/nvim-dap-ui",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+    },
+    config = function()
+      local dap, dapui = require("dap"), require("dapui")
+      dapui.setup()
+    end
+  },
+  -- }}
+
+  -- rust-tools {{
+  {
+    "simrat39/rust-tools.nvim",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+      "williamboman/mason.nvim",
+    },
+    config = function()
+      require "extensions.rust-tools"
+    end
+  },
+  -- }}
+
+  -- telescope-fzf-native {{
+  { 
+    'nvim-telescope/telescope-fzf-native.nvim',
+    build = 'make',
+  }
+  -- }}
 }
 
 -- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0

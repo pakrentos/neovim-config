@@ -30,8 +30,8 @@ vm('gs', '<Esc><Cmd>Sort<CR>')
 -- }}}
 
 -- git {{{
-nm("hu", "<cmd>Gitsigns reset_hunk<CR>")
-nm("hp", "<cmd>Gitsigns preview_hunk<CR>")
+nm("<Leader>hu", "<cmd>Gitsigns reset_hunk<CR>")
+nm("<Leader>hp", "<cmd>Gitsigns preview_hunk<CR>")
 -- }}}
 
 -- session {{{
@@ -53,7 +53,7 @@ nm('<leader>q', '<cmd>BufDel<CR>')
 -- }}}
 
 -- terminal {{{
-cmd[[
+cmd [[
     " exit from terminal mode with Esc
     tnoremap <S-Esc> <C-\><C-n>
     " navigate windows with alt+h/j/k/l
@@ -71,17 +71,17 @@ cmd[[
 -- comments {{{
 -- line
 vim.keymap.set("n", "<leader>/", function()
-    require('Comment.api').toggle.linewise.current()
+  require('Comment.api').toggle.linewise.current()
 end)
 
 -- selection
 local esc = vim.api.nvim_replace_termcodes(
-    '<ESC>', true, false, true
+  '<ESC>', true, false, true
 )
 
 vim.keymap.set('x', '<leader>/', function()
-    vim.api.nvim_feedkeys(esc, 'nx', false)
-    require('Comment.api').toggle.linewise(vim.fn.visualmode())
+  vim.api.nvim_feedkeys(esc, 'nx', false)
+  require('Comment.api').toggle.linewise(vim.fn.visualmode())
 end)
 -- }}}
 
@@ -90,7 +90,7 @@ nm('<leader>tt', '<cmd>VimwikiToggleListItem<CR>')
 -- }}}
 
 -- insert mode mappings {{{
-cmd[[
+cmd [[
     " to move in insert mode
     " move cursour word left
     inoremap <A-Left> <C-o>b
@@ -130,21 +130,21 @@ cmd[[
 
 -- neovide {{{
 if g.neovide then
-    g.neovide_padding_top = 0
-    g.neovide_padding_bottom = 0
-    g.neovide_padding_right = 0
-    g.neovide_padding_left = 0
-    g.neovide_scroll_animation_length = 0.6
-    g.neovide_cursor_animation_length = 0.03
-    g.neovide_cursor_animate_command_line = false
-    g.neovide_fullscreen = true
-    g.neovide_hide_mouse_when_typing = true
-    g.neovide_confirm_quit = true
+  g.neovide_padding_top = 0
+  g.neovide_padding_bottom = 0
+  g.neovide_padding_right = 0
+  g.neovide_padding_left = 0
+  g.neovide_scroll_animation_length = 0.6
+  g.neovide_cursor_animation_length = 0.03
+  g.neovide_cursor_animate_command_line = false
+  g.neovide_fullscreen = true
+  g.neovide_hide_mouse_when_typing = true
+  g.neovide_confirm_quit = true
 
-    opt.linespace = 1
-    opt.guifont = "Iosevka_NFM_Light:h13"
+  opt.linespace = 1
+  opt.guifont = "Iosevka_NFM_Light:h13"
 
-    cmd[[
+  cmd [[
         " save buffer
         inoremap <D-s> <C-o>:w<CR>
         " undo/redo
@@ -204,31 +204,51 @@ nm(']d', 'vim.diagnostic.goto_next')
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 api.nvim_create_autocmd('LspAttach', {
-    group = api.nvim_create_augroup('UserLspConfig', {}),
-    callback = function(ev)
-        -- Enable completion triggered by <c-x><c-o>
-        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+  group = api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-        -- Buffer local mappings.
-        -- See `:help vim.lsp.*` for documentation on any of the below functions
-        local bufopts = {
-            noremap = true,
-            silent = true,
-            buffer = bufnr
-        }
-        local opts = {
-            buffer = ev.buf
-        }
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-        vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, bufopts)
-        vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
-        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-    end
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local bufopts = {
+      noremap = true,
+      silent = true,
+      buffer = bufnr
+    }
+    local opts = {
+      buffer = ev.buf
+    }
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+    vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, bufopts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+    vim.keymap.set({'v', 'n'}, '<leader>ca', vim.lsp.buf.code_action, bufopts)
+  end
 })
 -- }}}
 
 -- LazyGit {{{
 nm('<leader>gg', '<cmd>LazyGit<CR>')
+-- }}}
+
+-- rust-tools {{{
+nm('<leader>rh', '<cmd>RustHoverActions<CR>')
+-- }}}
+
+-- nvim-dap {{{
+nm('<leader>db', '<cmd>DapToggleBreakpoint<CR>')
+nm('<leader>dt', '<cmd>DapTermintate<CR>')
+nm('<leader>di', '<cmd>DapStepInto<CR>')
+nm('<leader>do', '<cmd>DapStepOut<CR>')
+nm('<leader>dn', '<cmd>DapStepOver<CR>')
+nm('<leader>dr', '<cmd>DapRestartFrame<CR>')
+nm('<leader>dr', '<cmd>DapRestartFrame<CR>')
+nm('<leader>du', '<cmd>lua require("dapui").toggle()<CR>')
+-- }}} 
+
+-- misc {{{
+-- Reload shortcuts
+nm('<leader>rk', '<cmd>lua dofile(vim.env.HOME .. "/.config/nvim/lua/keybindings.lua")<CR>')
 -- }}}
 
 -- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0
