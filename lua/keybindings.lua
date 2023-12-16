@@ -31,7 +31,9 @@ vm('gs', '<Esc><Cmd>Sort<CR>')
 
 -- git {{{
 nm("<Leader>hu", "<cmd>Gitsigns reset_hunk<CR>")
-nm("<Leader>hp", "<cmd>Gitsigns preview_hunk<CR>")
+nm("<Leader>hl", "<cmd>Gitsigns preview_hunk<CR>")
+nm("<Leader>hn", "<cmd>Gitsigns next_hunk<CR>")
+nm("<Leader>hp", "<cmd>Gitsigns prev_hunk<CR>")
 -- }}}
 
 -- session {{{
@@ -237,10 +239,10 @@ nm('<leader>rh', '<cmd>RustHoverActions<CR>')
 
 -- nvim-dap {{{
 nm('<leader>db', '<cmd>DapToggleBreakpoint<CR>')
-nm('<leader>dt', '<cmd>DapTermintate<CR>')
-nm('<leader>di', '<cmd>DapStepInto<CR>')
-nm('<leader>do', '<cmd>DapStepOut<CR>')
-nm('<leader>dn', '<cmd>DapStepOver<CR>')
+nm('<leader>dt', '<cmd>DapTerminate<CR>')
+nm('<C-S-i>', '<cmd>DapStepInto<CR>')
+nm('<C-S-o>', '<cmd>DapStepOut<CR>')
+nm('<C-S-n>', '<cmd>DapStepOver<CR>')
 nm('<leader>dr', '<cmd>DapRestartFrame<CR>')
 nm('<leader>dr', '<cmd>DapRestartFrame<CR>')
 nm('<leader>du', '<cmd>lua require("dapui").toggle()<CR>')
