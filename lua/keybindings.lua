@@ -246,6 +246,16 @@ nm('<leader>dr', '<cmd>DapRestartFrame<CR>')
 nm('<leader>du', '<cmd>lua require("dapui").toggle()<CR>')
 -- }}} 
 
+-- bookmarks {{{
+nm("mm", "<cmd>lua require('bookmarks').bookmark_toggle()<CR>") -- add or remove bookmark at current line
+nm("mi", "<cmd>lua require('bookmarks').bookmark_ann()<CR>") -- add or edit mark annotation at current line 
+nm("mc", "<cmd>lua require('bookmarks').bookmark_clean()<CR>") -- clean all marks in local buffer
+nm("mn", "<cmd>lua require('bookmarks').bookmark_next()<CR>") -- jump to next mark in local buffer        
+nm("mp", "<cmd>lua require('bookmarks').bookmark_prev()<CR>") -- jump to previous mark in local buffer    
+nm("ml", "<cmd>lua require('bookmarks').bookmark_list()<CR>") -- show marked file list in quickfix window 
+nm("<leader>m", "<cmd>Telescope bookmarks list<CR>")
+-- }}}
+
 -- misc {{{
 -- Reload shortcuts
 nm('<leader>rk', '<cmd>lua dofile(vim.env.HOME .. "/.config/nvim/lua/keybindings.lua")<CR>')

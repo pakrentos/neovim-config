@@ -75,6 +75,7 @@ return {
       "nvim-lua/plenary.nvim",
       "ahmedkhalf/project.nvim",
       'nvim-telescope/telescope-fzf-native.nvim',
+      "tomasky/bookmarks.nvim",
       {
         "nvim-telescope/telescope-live-grep-args.nvim",
         -- This will not install any breaking changes.
@@ -394,6 +395,16 @@ return {
   { 
     'nvim-telescope/telescope-fzf-native.nvim',
     build = 'make',
+  },
+  -- }}
+
+  -- boorkmarks {{
+  {
+    "tomasky/bookmarks.nvim",
+    event = "VimEnter",
+    config = function()
+      require "extensions.bookmarks"
+    end
   }
   -- }}
 }
