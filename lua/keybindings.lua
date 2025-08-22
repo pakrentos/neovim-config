@@ -1,7 +1,5 @@
 require "helpers/globals"
 require "helpers/keyboard"
-require "./utils"
--- local utils = require("utils")
 
 g.mapleader = ' ' -- Use Space, like key for alternative hotkeys
 g.maplocalleader = ','
