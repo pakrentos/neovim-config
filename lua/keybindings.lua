@@ -1,7 +1,10 @@
 require "helpers/globals"
 require "helpers/keyboard"
+require "./utils"
+-- local utils = require("utils")
 
 g.mapleader = ' ' -- Use Space, like key for alternative hotkeys
+g.maplocalleader = ','
 
 -- prevent moving cursor when yanking (copying)
 vm('y', 'ygv<Esc>')
@@ -18,6 +21,7 @@ nm('<leader>xx', '<cmd>Telescope diagnostics theme=ivy<CR>')
 nm('<leader>j', '<cmd>Telescope<CR>')
 nm('<leader>k', '<cmd>Telescope keymaps<CR>')
 nm('<leader>t', '<cmd>Telescope lsp_document_symbols<CR>')
+im('<C-q', '<M-q>')
 -- }}}
 
 -- Trouble {{{
@@ -63,6 +67,10 @@ cmd [[
     tnoremap <A-j> <C-\><C-n><C-w>j
     tnoremap <A-k> <C-\><C-n><C-w>k
     tnoremap <A-l> <C-\><C-n><C-w>l
+    tnoremap <C-k> <Up>
+    tnoremap <C-j> <Down>
+    tnoremap <C-l> <Right>
+    tnoremap <C-h> <Left>
     nnoremap <A-h> <C-w>h
     nnoremap <A-j> <C-w>j
     nnoremap <A-k> <C-w>k
@@ -202,6 +210,7 @@ end
 -- LSP {{{
 nm('[d', 'vim.diagnostic.goto_prev')
 nm(']d', 'vim.diagnostic.goto_next')
+nm('<leader>rr', '<cmd>lua vim.lsp.buf.rename()<CR>')
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
@@ -222,10 +231,33 @@ api.nvim_create_autocmd('LspAttach', {
       buffer = ev.buf
     }
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-    vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, bufopts)
+    vim.keymap.set('n', '<leader>f', function()
+      local bufnr = vim.api.nvim_get_current_buf()
+      local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+      local has_formatter = false
+
+      for _, client in ipairs(clients) do
+        if client.server_capabilities.documentFormattingProvider then
+          has_formatter = true
+          break
+        end
+      end
+
+      if has_formatter then
+        vim.lsp.buf.format()
+      else
+        require("conform").format({ bufnr = bufnr })
+      end
+    end, bufopts)
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
-    vim.keymap.set({'v', 'n'}, '<leader>ca', vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set({ 'v', 'n' }, '<leader>ca', vim.lsp.buf.code_action, bufopts)
   end
+})
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function(args)
+    require("conform").format({ bufnr = args.buf })
+  end,
 })
 -- }}}
 
@@ -235,6 +267,7 @@ nm('<leader>gg', '<cmd>LazyGit<CR>')
 
 -- rust-tools {{{
 nm('<leader>rh', '<cmd>RustHoverActions<CR>')
+nm('<leader>rd', '<cmd>RustOpenExternalDocs<CR>')
 -- }}}
 
 -- nvim-dap {{{
@@ -246,21 +279,26 @@ nm('<C-S-n>', '<cmd>DapStepOver<CR>')
 nm('<leader>dr', '<cmd>DapRestartFrame<CR>')
 nm('<leader>dr', '<cmd>DapRestartFrame<CR>')
 nm('<leader>du', '<cmd>lua require("dapui").toggle()<CR>')
--- }}} 
+-- }}}
 
 -- bookmarks {{{
 nm("mm", "<cmd>lua require('bookmarks').bookmark_toggle()<CR>") -- add or remove bookmark at current line
-nm("mi", "<cmd>lua require('bookmarks').bookmark_ann()<CR>") -- add or edit mark annotation at current line 
-nm("mc", "<cmd>lua require('bookmarks').bookmark_clean()<CR>") -- clean all marks in local buffer
-nm("mn", "<cmd>lua require('bookmarks').bookmark_next()<CR>") -- jump to next mark in local buffer        
-nm("mp", "<cmd>lua require('bookmarks').bookmark_prev()<CR>") -- jump to previous mark in local buffer    
-nm("ml", "<cmd>lua require('bookmarks').bookmark_list()<CR>") -- show marked file list in quickfix window 
+nm("mi", "<cmd>lua require('bookmarks').bookmark_ann()<CR>")    -- add or edit mark annotation at current line
+nm("mc", "<cmd>lua require('bookmarks').bookmark_clean()<CR>")  -- clean all marks in local buffer
+nm("mn", "<cmd>lua require('bookmarks').bookmark_next()<CR>")   -- jump to next mark in local buffer
+nm("mp", "<cmd>lua require('bookmarks').bookmark_prev()<CR>")   -- jump to previous mark in local buffer
+nm("ml", "<cmd>lua require('bookmarks').bookmark_list()<CR>")   -- show marked file list in quickfix window
 nm("<leader>m", "<cmd>Telescope bookmarks list<CR>")
+-- }}}
+
+-- obsidian {{{
+nm("<leader>o", "<cmd>ObsidianFollowLink<CR>")
 -- }}}
 
 -- misc {{{
 -- Reload shortcuts
 nm('<leader>rk', '<cmd>lua dofile(vim.env.HOME .. "/.config/nvim/lua/keybindings.lua")<CR>')
+vm('<leader>ff', '"ly<cmd>Telescope live_grep<CR><C-r>l')
 -- }}}
 
 -- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0

@@ -22,6 +22,7 @@ opt.softtabstop = 0                 -- Set amount of space characters, when we p
 -- Editing {{{
 opt.spelllang = "en_us,ru_ru"       -- Set spell language
 opt.wrap = false                    -- Disable word wrap
+opt.textwidth = 80
 -- }}}
 
 -- UI {{{
@@ -94,6 +95,8 @@ cmd[[au FileType tsx setlocal tw=100]]
 -- py
 cmd[[au FileType py setlocal tw=80]]
 cmd[[au FileType python setlocal tw=80]]
+cmd[[au FileType py setlocal formatoptions-=t]]
+cmd[[au FileType python setlocal formatoptions-=t]]
 -- rust
 cmd[[au FileType rust setlocal tw=100]]
 -- lua

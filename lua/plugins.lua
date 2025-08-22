@@ -103,7 +103,6 @@ return {
       'hrsh7th/cmp-nvim-lsp-signature-help',
       'hrsh7th/cmp-nvim-lua',
       'zbirenbaum/copilot.lua',
-      'zbirenbaum/copilot-cmp',
       'rafamadriz/friendly-snippets',
       'onsails/lspkind-nvim',
     },
@@ -223,12 +222,12 @@ return {
   -- }}}
 
   -- vimwiki {{{
-  {
-    'vimwiki/vimwiki',
-    init = function()
-      require "extensions.vimwiki"
-    end
-  },
+  -- {
+  --   'vimwiki/vimwiki',
+  --   init = function()
+  --     require "extensions.vimwiki"
+  --   end
+  -- },
   --}}}
 
   -- persisted.nvim (session management) {{{
@@ -358,14 +357,14 @@ return {
   },
   -- }}}
 
-  -- neodev {{
+  -- neodev {{{
   {
     "folke/neodev.nvim",
     opts = {},
   },
-  -- }}
+  -- }}}
 
-  -- nvim-dap-ui {{
+  -- nvim-dap-ui {{{
   {
     "rcarriga/nvim-dap-ui",
     dependencies = {
@@ -376,9 +375,9 @@ return {
       dapui.setup()
     end
   },
-  -- }}
+  -- }}}
 
-  -- rust-tools {{
+  -- rust-tools {{{
   {
     "simrat39/rust-tools.nvim",
     dependencies = {
@@ -389,24 +388,258 @@ return {
       require "extensions.rust-tools"
     end
   },
-  -- }}
+  -- }}}
 
   -- telescope-fzf-native {{
-  { 
+  {
     'nvim-telescope/telescope-fzf-native.nvim',
     build = 'make',
   },
   -- }}
 
-  -- boorkmarks {{
+  -- boorkmarks {{{
   {
     "tomasky/bookmarks.nvim",
     event = "VimEnter",
     config = function()
       require "extensions.bookmarks"
     end
+  },
+  -- }}}
+
+  -- obisidian {{{
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*", -- recommended, use latest release instead of latest commit
+    lazy = true,
+    ft = "markdown",
+    -- event = {
+    --   "BufReadPre " .. vim.fn.expand "~/kernel-vault" .. "/**.md",
+    --   "BufNewFile  " .. vim.fn.expand "~/kernel-vault" .. "/**.md",
+    -- },
+    dependencies = {
+      -- Required.
+      "nvim-lua/plenary.nvim",
+
+      -- see below for full list of optional dependencies 👇
+    },
+    config = function()
+      require "extensions.obsidian"
+    end
+  },
+  -- }}}
+
+  -- python-dap {{{
+  {
+    "mfussenegger/nvim-dap-python",
+    config = function()
+      require('dap-python').setup("~/.local/share/nvim/mason/packages/debugpy/venv/bin/python")
+    end,
+    dependencies = {
+      "mfussenegger/nvim-dap",
+      "williamboman/mason.nvim",
+    },
+  },
+  -- }}}
+
+  -- nvim-autopairs {{{
+  -- {
+  --   'windwp/nvim-autopairs',
+  --   event = "InsertEnter",
+  --   config = true
+  --   -- use opts = {} for passing setup options
+  --   -- this is equalent to setup({}) function
+  -- },
+  -- }}}
+
+  -- avante (cursor-like ide) {{{
+  -- {
+  --   "yetone/avante.nvim",
+  --   event = "VeryLazy",
+  --   lazy = false,
+  --   version = false, -- set this if you want to always pull the latest change
+  --   opts = {
+  --     provider = "gemini",
+  --     mode = "agentic",
+  --     -- auto_suggestions_provider = "groq", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
+  --     cursor_applying_provider = "gemini",
+  --     providers = {
+  --       ollama = {
+  --         endpoint = "http://127.0.0.1:11434", -- Note that there is no /v1 at the end.
+  --         model = "hf.co/mlabonne/gemma-3-12b-it-abliterated-GGUF:Q8_0",
+  --       },
+  --       gemini = {
+  --         -- endpoint = "https://generativelanguage.googleapis.com/v1beta/openai/",
+  --         model = "gemini-2.5-flash",
+  --         api_key_name = "AVANTE_GEMINI_API_KEY",
+  --       }
+  --     },
+  --     behaviour = {
+  --       auto_suggestions = false,
+  --       enable_cursor_planning_mode = true,
+  --     },
+  --     windows = {
+  --       input = { height = 30 },
+  --     }
+  --     -- add any opts here
+  --   },
+  --   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+  --   build = "make",
+  --   -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+  --   dependencies = {
+  --     "stevearc/dressing.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --     --- The below dependencies are optional,
+  --     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+  --     "zbirenbaum/copilot.lua",      -- for providers='copilot'
+  --     {
+  --       -- support for image pasting
+  --       "HakonHarnes/img-clip.nvim",
+  --       event = "VeryLazy",
+  --       opts = {
+  --         -- recommended settings
+  --         default = {
+  --           embed_image_as_base64 = false,
+  --           prompt_for_file_name = false,
+  --           drag_and_drop = {
+  --             insert_mode = true,
+  --           },
+  --           -- required for Windows users
+  --           use_absolute_path = true,
+  --         },
+  --       },
+  --     },
+  --     {
+  --       -- Make sure to set this up properly if you have lazy=true
+  --       'MeanderingProgrammer/render-markdown.nvim',
+  --       opts = {
+  --         file_types = { "markdown", "Avante" },
+  --       },
+  --       ft = { "markdown", "Avante" },
+  --     },
+  --   },
+  -- },
+  -- }}}
+
+  -- nvim-nio (async io lib for nvim) {{{
+  { "nvim-neotest/nvim-nio" },
+  -- }}}
+
+  -- markdown.nvim (tools for working with md) {{{
+  {
+    "tadmccorkle/markdown.nvim",
+    ft = "markdown", -- or 'event = "VeryLazy"'
+    opts = {
+      -- configuration here or empty for defaults
+    },
+  },
+  -- }}}
+
+  -- nvim-metals (scala) {{{
+  {
+    "scalameta/nvim-metals",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    ft = { "scala", "sbt", "java" },
+    opts = function()
+      local metals_config = require("metals").bare_config()
+      metals_config.on_attach = function(client, bufnr)
+        -- your on_attach function
+      end
+
+      return metals_config
+    end,
+    config = function(self, metals_config)
+      local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = self.ft,
+        callback = function()
+          require("metals").initialize_or_attach(metals_config)
+        end,
+        group = nvim_metals_group,
+      })
+    end
+  },
+  -- }}}
+
+  -- tex utils {{{
+  {
+    "lervag/vimtex",
+    lazy = false, -- we don't want to lazy load VimTeX
+    -- tag = "v2.15", -- uncomment to pin to a specific release
+    init = function()
+      -- VimTeX configuration goes here, e.g.
+      vim.g.vimtex_view_method = "general"
+    end
+  },
+  -- }}}
+
+  {
+    "andrewferrier/wrapping.nvim",
+    config = function()
+      require "extensions.wrapping"
+    end
+  },
+
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      bigfile = { enabled = true },
+      dashboard = { enabled = true },
+      -- explorer = { enabled = true },
+      indent = { enabled = true },
+      input = { enabled = true },
+      picker = { enabled = true },
+      notifier = { enabled = true },
+      -- quickfile = { enabled = true },
+      scope = { enabled = true },
+      -- scroll = { enabled = true },
+      statuscolumn = { enabled = true },
+      words = { enabled = true },
+    },
+  },
+
+  {
+    "coder/claudecode.nvim",
+    dependencies = { "folke/snacks.nvim" },
+    config = true,
+    keys = {
+      { "<leader>a",  nil,                              desc = "AI/Claude Code" },
+      { "<leader>ac", "<cmd>ClaudeCode<cr>",            desc = "Toggle Claude" },
+      { "<leader>af", "<cmd>ClaudeCodeFocus<cr>",       desc = "Focus Claude" },
+      { "<leader>ar", "<cmd>ClaudeCode --resume<cr>",   desc = "Resume Claude" },
+      { "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+      { "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
+      { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>",       desc = "Add current buffer" },
+      { "<leader>as", "<cmd>ClaudeCodeSend<cr>",        mode = "v",                  desc = "Send to Claude" },
+      {
+        "<leader>as",
+        "<cmd>ClaudeCodeTreeAdd<cr>",
+        desc = "Add file",
+        ft = { "NvimTree", "neo-tree", "oil", "minifiles" },
+      },
+      -- Diff management
+      { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+      { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>",   desc = "Deny diff" },
+    },
+  },
+
+  {
+    'stevearc/conform.nvim',
+    opts = {},
+    config = function()
+      require "extensions.conform"
+    end
   }
-  -- }}
+
 }
 
 -- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0

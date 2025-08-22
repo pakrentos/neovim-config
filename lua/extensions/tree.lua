@@ -42,7 +42,7 @@ end
 
 require("nvim-tree").setup({
     view = {
-        side = "right"
+        side = "left"
     },
     on_attach = on_attach
 })

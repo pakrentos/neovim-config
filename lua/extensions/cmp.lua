@@ -26,7 +26,6 @@ cmp.setup{
 
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },                -- LSP
-    { name = 'copilot' },                 -- Copilot
     { name = 'nvim_lsp_signature_help' }, -- LSP for parameters in functions
     { name = 'nvim_lua' },                -- Lua Neovim API
     { name = 'luasnip' },                 -- Luasnip
@@ -47,8 +46,8 @@ cmp.setup{
   }
 }
 
-require("copilot").setup()
-require("copilot_cmp").setup()
+-- require("copilot").setup()
+-- require("copilot_cmp").setup()
 
 -- Add snippets from Friendly Snippets
 require("luasnip/loaders/from_vscode").lazy_load()

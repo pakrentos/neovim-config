@@ -54,5 +54,6 @@
         "/Users/qwerty/.local/share/nvim/lazy/nvim-bufdel/lua",
         "/Users/qwerty/.config/nvim/lua",
         "${3rd}/luv/library"
-    ]
+    ],
+    "workspace.checkThirdParty": false
 }
